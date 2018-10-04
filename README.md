@@ -1,4 +1,4 @@
-# eVM - EducationalVM
+# EduVM - An educational virtual machine
 
 ### Why a VM?
 
