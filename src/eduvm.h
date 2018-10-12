@@ -1,12 +1,12 @@
-#ifndef VM_H
-#define VM_H
+#ifndef EDUVM_H
+#define EDUVM_H
 
 #include <stdio.h>
 #include <stdint.h>
 
 #include "opcodes.h"
 
-#define REGISTER_COUNT 5
+#define NUM_REGISTERS 5
 #define MEMORY_WORD_COUNT 64
 
 typedef int32_t word; /* Define a word as a 32 bit integer */
