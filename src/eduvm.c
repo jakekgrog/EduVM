@@ -61,3 +61,34 @@ void vm_load(vm_inst *vm, word *instructions, int instructionCount) {
 		vm->memInUse++; // Count how much memory has been taken up
 	}
 }
+
+word *get_val(vm_inst *vm, word arg_word, word *literal) {
+
+	/* If arg_word is less than the number of registers then arg_word is a register value
+	*  otherwise arg_word is a literal
+	*/
+	if (arg_word < NUM_REGISTERS) {
+		return &vm->registers[arg_word];
+	} else {
+		*literal = arg_word - NUM_REGISTERS;
+		return literal;
+	}
+}
+
+void vm_instruct_exec(vm_inst *vm, word *instruction) {
+	
+	/* Check ByteCodeTutorial for an explanation of the following few statements */
+	word opcode = *instruction >> 24;
+
+	word a_arg = (*instruction >> 12) & 2047;
+	word b_arg = *instruciton & 2047;
+
+	word *valA;
+	word *valB;
+
+	word litA;
+	word litB;
+
+	valA = get_val(vm, a_arg, &litA);
+	valB = get_val(vm, b_arg, &litB)
+}

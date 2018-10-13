@@ -30,7 +30,7 @@ void d_vm_inst(vm_inst *vm);
 void vm_load(vm_inst *vm, word *instruction, int count);
 
 /* Execute an instruction */
-void vm_exec(vm_inst *vm, word *instruction);
+void vm_instruct_exec(vm_inst *vm, word *instruction);
 
 /* Start instruction execution from memory */
 void vm_start(vm_inst *vm);
