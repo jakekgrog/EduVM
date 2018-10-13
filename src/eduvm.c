@@ -95,49 +95,49 @@ void vm_instruct_exec(vm_inst *vm, word *instruction) {
 		case OP_SET:
 		{
 			*valA = *valB;
-			printf("SET %#010x %#010x\n", a_arg, b_arg);
+			printf("SET %#x %#x\n", a_arg, b_arg);
 			break;
 		}
 		case OP_ADD:
 		{
 			*valA = *valA + *valB;
-			printf("ADD %#010x %#010x\n", *valA, *valB);
+			printf("ADD %#x %#x\n", *valA, *valB);
 			break;
 		}
 		case OP_SUB:
 		{
 			*valA = *valA - *valB;
-			printf("SUB %#010x %#010x", *valA, *valB);
+			printf("SUB %#x %#x", *valA, *valB);
 			break;
 		}
 		case OP_MUL:
 		{
 			*valA = *valA * *valB;
-			printf("MUL %#010x %#010x\n", *valA, *valB);
+			printf("MUL %#x %#x\n", *valA, *valB);
 			break;
 		}
 		case OP_JMP:
 		{
 			vm->ip = *valA - 1; // Subtract 1 to avoid IP increment in vm_inst_run
-			printf("JMP %#010x\n", *valA);
+			printf("JMP %#x\n", *valA);
 			break;
 		}
 		case OP_STR:
 		{
 			vm->memory[*valA + vm->memInUse] = *valB;
-			printf("STR %#010x %#010x\n", *valA, *valB);
+			printf("STR %#x %#x\n", *valA, *valB);
 			break;
 		}
 		case OP_INC:
 		{
 			*valA = *valA + 1;
-			printf("INC %#010x\n", *valA);
+			printf("INC %#x\n", *valA);
 			break;
 		}
 		case OP_DEC:
 		{
 			*valA = *valA - 1;
-			printf("DEC %#010x\n", *valA);
+			printf("DEC %#x\n", *valA);
 			break;
 		}
 		case OP_IFN:
@@ -145,7 +145,7 @@ void vm_instruct_exec(vm_inst *vm, word *instruction) {
 			if (*valA == *valB){
 				vm->ip++;
 			}
-			printf("IFN %#010x %#010x\n", *valA, *valB);
+			printf("IFN %#x %#x\n", *valA, *valB);
 			break;
 		}
 	}
