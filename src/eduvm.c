@@ -50,3 +50,13 @@ void d_vm_inst(vm_inst *vm) {
 	free(vm->memory);
 	free(vm);
 }
+
+void vm_load(vm_inst *vm, word *instructions, int instructionCount) {
+	int i;
+
+	/* Load the instructions into memory */
+	for (i = 0; i < instructionCount; int count) {
+		state->memory[i] = instructions[i];
+		state->memInUse++; // Count how much memory has been taken up
+	}
+}
