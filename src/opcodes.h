@@ -12,3 +12,5 @@
 #define OP_DEC	0x09 // Decrement arg A by 1
 #define OP_SET	0x0A // Set register arg A to value of arg B
 #define OP_MUL	0x0B // Multiply arg A by arg B
+
+#endif

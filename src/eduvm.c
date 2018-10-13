@@ -1,4 +1,4 @@
-#include "vm.h"
+#include "eduvm.h"
 
 vm_inst *n_vm_inst(void) {
 
@@ -36,14 +36,14 @@ void d_vm_inst(vm_inst *vm) {
 	printf("\nPrinting Registers...\n");
 
 	for (i = 0; i < NUM_REGISTERS; i++) {
-		printf("%c: %d", 65 + i, state->registers[i]);
+		printf("%c: %d ", 65 + i, vm->registers[i]);
 	}
 
 	printf("\nPrinting Memory...\n");
 
 	for (i = 0; i < MEMORY_WORD_COUNT; i++) {
 		word *memVal = &vm->memory[i];
-		printf("%#g ", *memVal);
+		printf("%#x ", *memVal);
 	}
 	printf("\n");
 
@@ -56,7 +56,7 @@ void vm_load(vm_inst *vm, word *instructions, int instructionCount) {
 	int i;
 
 	/* Load the instructions into memory */
-	for (i = 0; i < instructionCount; int count) {
+	for (i = 0; i < instructionCount; i++) {
 		vm->memory[i] = instructions[i];
 		vm->memInUse++; // Count how much memory has been taken up
 	}
@@ -80,7 +80,7 @@ void vm_instruct_exec(vm_inst *vm, word *instruction) {
 	/* Check ByteCodeExplanation for an explanation of the following 3 statements */
 	word opcode = *instruction >> 24;
 	word a_arg = (*instruction >> 12) & 2047;
-	word b_arg = *instruciton & 2047;
+	word b_arg = *instruction & 2047;
 
 	word *valA;
 	word *valB;
@@ -89,44 +89,72 @@ void vm_instruct_exec(vm_inst *vm, word *instruction) {
 	word litB;
 
 	valA = get_val(vm, a_arg, &litA);
-	valB = get_val(vm, b_arg, &litB)
+	valB = get_val(vm, b_arg, &litB);
 
 	switch(opcode) {
 		case OP_SET:
 		{
 			*valA = *valB;
-			printf("SET %#x %#x\n", a_arg, b_arg);
+			printf("SET %#010x %#010x\n", a_arg, b_arg);
 			break;
 		}
 		case OP_ADD:
 		{
 			*valA = *valA + *valB;
-			printf("ADD %#x %#x\n", *valA, *valB);
+			printf("ADD %#010x %#010x\n", *valA, *valB);
 			break;
 		}
 		case OP_SUB:
 		{
 			*valA = *valA - *valB;
-			printf("SUB %#x %#x", *valA, *valB);
+			printf("SUB %#010x %#010x", *valA, *valB);
 			break;
 		}
 		case OP_MUL:
 		{
 			*valA = *valA * *valB;
-			printf("MUL %#x %#x\n", *valA, *valB);
+			printf("MUL %#010x %#010x\n", *valA, *valB);
 			break;
 		}
 		case OP_JMP:
 		{
-			vm->ip = *valA - 1 // Subtract 1 to avoid IP increment in vm_inst_run
-			printf("JMP %#x\n", *valA);
+			vm->ip = *valA - 1; // Subtract 1 to avoid IP increment in vm_inst_run
+			printf("JMP %#010x\n", *valA);
 			break;
 		}
 		case OP_STR:
 		{
 			vm->memory[*valA + vm->memInUse] = *valB;
-			print("STR %#x %#x\n", *valA, *valB);
+			printf("STR %#010x %#010x\n", *valA, *valB);
 			break;
 		}
+		case OP_INC:
+		{
+			*valA = *valA + 1;
+			printf("INC %#010x\n", *valA);
+			break;
+		}
+		case OP_DEC:
+		{
+			*valA = *valA - 1;
+			printf("DEC %#010x\n", *valA);
+			break;
+		}
+		case OP_IFN:
+		{
+			if (*valA == *valB){
+				vm->ip++;
+			}
+			printf("IFN %#010x %#010x\n", *valA, *valB);
+			break;
+		}
+	}
+}
+
+void vm_inst_run(vm_inst *vm) {
+
+	while((vm->ip) < (vm->memInUse)) {
+		vm_instruct_exec(vm, &vm->memory[vm->ip]);
+		vm->ip++;
 	}
 }
