@@ -22,3 +22,8 @@ run make
 `make`
 
 Now the programs have been compiled and can be found in the programs/bin directory
+
+## To Implement:
+
+1. More opcodes
+2. Load from file
