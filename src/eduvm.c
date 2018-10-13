@@ -6,7 +6,7 @@ vm_inst *n_vm_inst(void) {
 
 	/* Allocate memory for the registers and VM RAM 
 	*
-	*  calloc: Allocates requested memory, sets it to 0, and returns the address
+	*  calloc: Allocates requested memory, sets it to 0, and returns a pointer
 	*          - Takes 2 arguments:
 	*              - Number of memory locations to allocate (elements)
 	*              - Size of each element 
@@ -28,8 +28,9 @@ void d_vm_inst(vm_inst *vm) {
 	
 	int i;
 
-	/* Since we dont have a way of printing anything from the instruction set
-	*  we should print the state of the VM before we destroy it.
+	/* Since we dont have a way of printing anything,
+	*  we should log the state of the VM to the console
+	*  before we destroy it.
 	*/
 
 	printf("\nPrinting Registers...\n");
@@ -56,7 +57,7 @@ void vm_load(vm_inst *vm, word *instructions, int instructionCount) {
 
 	/* Load the instructions into memory */
 	for (i = 0; i < instructionCount; int count) {
-		state->memory[i] = instructions[i];
-		state->memInUse++; // Count how much memory has been taken up
+		vm->memory[i] = instructions[i];
+		vm->memInUse++; // Count how much memory has been taken up
 	}
 }
