@@ -77,9 +77,8 @@ word *get_val(vm_inst *vm, word arg_word, word *literal) {
 
 void vm_instruct_exec(vm_inst *vm, word *instruction) {
 	
-	/* Check ByteCodeTutorial for an explanation of the following few statements */
+	/* Check ByteCodeExplanation for an explanation of the following 3 statements */
 	word opcode = *instruction >> 24;
-
 	word a_arg = (*instruction >> 12) & 2047;
 	word b_arg = *instruciton & 2047;
 
@@ -91,4 +90,43 @@ void vm_instruct_exec(vm_inst *vm, word *instruction) {
 
 	valA = get_val(vm, a_arg, &litA);
 	valB = get_val(vm, b_arg, &litB)
+
+	switch(opcode) {
+		case OP_SET:
+		{
+			*valA = *valB;
+			printf("SET %#x %#x\n", a_arg, b_arg);
+			break;
+		}
+		case OP_ADD:
+		{
+			*valA = *valA + *valB;
+			printf("ADD %#x %#x\n", *valA, *valB);
+			break;
+		}
+		case OP_SUB:
+		{
+			*valA = *valA - *valB;
+			printf("SUB %#x %#x", *valA, *valB);
+			break;
+		}
+		case OP_MUL:
+		{
+			*valA = *valA * *valB;
+			printf("MUL %#x %#x\n", *valA, *valB);
+			break;
+		}
+		case OP_JMP:
+		{
+			vm->ip = *valA - 1 // Subtract 1 to avoid IP increment in vm_inst_run
+			printf("JMP %#x\n", *valA);
+			break;
+		}
+		case OP_STR:
+		{
+			vm->memory[*valA + vm->memInUse] = *valB;
+			print("STR %#x %#x\n", *valA, *valB);
+			break;
+		}
+	}
 }
